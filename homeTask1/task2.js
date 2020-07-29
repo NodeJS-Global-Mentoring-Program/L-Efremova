@@ -1,5 +1,5 @@
-import fs from "fs";
-import csvtojson from "csvtojson";
+const fs = require("fs");
+const csvtojson = require("csvtojson");
 
 const filePath = "homeTask1/csv/test.csv";
 
