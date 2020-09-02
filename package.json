@@ -10,6 +10,7 @@
     "task3": "nodemon --exec babel-node homeTask1/task3.js",
     "build": "tsc",
     "dev:module2": "nodemon homeTask2/app.ts",
+    "dev:module3": "nodemon homeTask3/app.ts",
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
@@ -17,10 +18,15 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "@types/bcrypt": "^3.0.0",
     "babel-eslint": "^10.1.0",
+    "bcrypt": "^5.0.0",
     "csvtojson": "^2.0.10",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-joi-validation": "^4.0.4-beta.0",
+    "pg": "^8.3.3",
+    "sequelize": "^6.3.4",
     "ts-node": "^9.0.0",
     "uuid": "^8.3.0"
   },
