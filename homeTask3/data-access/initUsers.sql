@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    login VARCHAR (30) NOT NULL CONSTRAINT uniq_login UNIQUE,
+    login VARCHAR (30) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     age int NOT NULL CHECK (
         age >= 4 
@@ -16,4 +16,15 @@ VALUES ('Anakin', 'password1', 40, false),
     ('Luke', 'password4', 20, false),
     ('Ben', 'password5', 5, false),
     ('Han', 'password6', 20, false)
-    ON CONFLICT ON CONSTRAINT uniq_login DO NOTHING;
+    ON CONFLICT (login) DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS groups (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR (30) NOT NULL UNIQUE,
+    permissions TEXT []
+);
+
+INSERT INTO groups (name, permissions) 
+VALUES ('Dark Side', '{"READ", "WHRITE", "DELETE"}'),
+    ('Jedi', '{"READ", "WHRITE", "DELETE", "SHARE", "UPLOAD_FILES"}')
+    ON CONFLICT (name) DO NOTHING;

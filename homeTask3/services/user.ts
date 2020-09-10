@@ -1,13 +1,15 @@
 import { ModelCtor } from "sequelize";
 
+import { sequelize } from "../data-access/init-sequelize";
+
 import { IUser } from "../utils/interfaces";
 import { bcryptPassword } from "../utils/helpers";
-import { User, UserInstance } from "../models/user";
+import { User } from "../models/user";
 
 export default class UserService {
   usersData: typeof User;
 
-  constructor(usersData: ModelCtor<UserInstance>) {
+  constructor(usersData: typeof User) {
     this.usersData = usersData;
   }
 
@@ -16,6 +18,7 @@ export default class UserService {
   }
 
   async deleteUserById(id: string) {
+    await this.removeUserFromGroups(id);
     return await this.usersData.update(
       { isDeleted: true },
       { where: { id, isDeleted: false } }
@@ -23,6 +26,7 @@ export default class UserService {
   }
 
   async destroyUserById(id: string) {
+    await this.removeUserFromGroups(id);
     return await this.usersData.destroy({ where: { id } });
   }
 
@@ -36,8 +40,9 @@ export default class UserService {
   }
 
   async getUserById(id: string) {
-    return await this.usersData.findByPk(id, {
+    return await this.usersData.findOne({
       attributes: ["id", "login", "age", "isDeleted"],
+      where: { id, isDeleted: false },
     });
   }
 
@@ -46,5 +51,19 @@ export default class UserService {
       { ...userData, password: await bcryptPassword(userData.password) },
       { where: { id } }
     );
+  }
+
+  async removeUserFromGroups(id: string | number) {
+    const transaction = await sequelize.transaction();
+    try {
+      const user = await this.usersData.findOne({
+        where: { id },
+      });
+      const groups = await user?.getGroups();
+      await user?.removeGroups(groups);
+      await transaction.commit();
+    } catch (err) {
+      await transaction.rollback();
+    }
   }
 }

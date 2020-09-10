@@ -1,10 +1,32 @@
-import { DataTypes, Model } from "sequelize";
+import {
+  DataTypes,
+  Model,
+  BelongsToManyGetAssociationsMixin,
+  BelongsToManyRemoveAssociationsMixin,
+} from "sequelize";
 
-import { sequelize } from "./../loaders/postgress-loader";
+import { sequelize } from "../data-access/init-sequelize";
+
 import { IUser } from "../utils/interfaces";
 import { bcryptPassword } from "../utils/helpers";
 
-export interface UserInstance extends Model<IUser, IUser>, IUser {}
+import { Group, GroupInstance } from "./group";
+
+class UserModel extends Model<IUser, IUser> {
+  static associate = () => {
+    UserModel.associations.groups = UserModel.belongsToMany(Group, {
+      through: "UserGroup",
+    });
+  };
+}
+
+export interface UserInstance extends UserModel, IUser {
+  getGroups: BelongsToManyGetAssociationsMixin<GroupInstance>;
+  removeGroups: BelongsToManyRemoveAssociationsMixin<
+    GroupInstance,
+    GroupInstance["id"]
+  >;
+}
 
 export const User = sequelize.define<UserInstance>(
   "User",
@@ -17,6 +39,7 @@ export const User = sequelize.define<UserInstance>(
     login: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,

@@ -1,18 +1,8 @@
-import { Sequelize } from "sequelize";
-
 import fs from "fs";
 import path from "path";
 
-import config from "../config";
-
-export const sequelize = new Sequelize({
-  username: config.DB_USERNAME,
-  password: config.DB_PASSWORD,
-  host: config.DB_HOST,
-  dialect: "postgres",
-  database: config.DB_DATABASE,
-  port: config.DB_PORT,
-});
+import { sequelize } from "../data-access/init-sequelize";
+import { initModelsAssociations } from "../data-access/initModels";
 
 export const postgresLoader = async (): Promise<void> => {
   try {
@@ -30,6 +20,11 @@ export const postgresLoader = async (): Promise<void> => {
 
     await sequelize.authenticate();
     console.log("Connection has been established successfully");
+
+    initModelsAssociations();
+
+    await sequelize.sync();
+
     await sequelize.query(sql);
   } catch (e) {
     console.error("Unable to connect to the database:", e);
