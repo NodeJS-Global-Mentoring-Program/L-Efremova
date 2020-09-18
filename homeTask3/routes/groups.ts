@@ -1,7 +1,7 @@
 import express from "express";
 
 import GroupService from "../services/group";
-import { Group } from "../models/group";
+import { Group } from "../dataAccess/models/group";
 
 const groupsRouter = express.Router();
 const groupService = new GroupService(Group);
@@ -23,7 +23,14 @@ groupsRouter.get("/:id", async (req, res, next) => {
 });
 
 groupsRouter.post("/", async (req, res, next) => {
-  const newGroup = await groupService.createGroup(req.body).catch(next);
+  //TODO: add validation
+  console.log(req.body);
+  const newGroup = await groupService
+    .createGroup({
+      ...req.body,
+      permissions: req.body.permissions.split(","),
+    })
+    .catch(next);
 
   res.send(newGroup);
 });
@@ -52,8 +59,11 @@ groupsRouter.delete("/:id", async (req, res, next) => {
 groupsRouter.post("/:groupId/users", async (req, res, next) => {
   await groupService
     .addUsersToGroup(req.params.groupId, [req.body.userId])
+    .then((data) => {
+      console.log("data: ", data);
+      res.send(`User with id ${req.body.userId} is joined this group!`);
+    })
     .catch(next);
-  res.send(`User with id ${req.body.userId} is joined this group!`);
 });
 
 export { groupsRouter };

@@ -1,17 +1,16 @@
 import dotenv from "dotenv";
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
+const config = dotenv.config();
 
-if (dotenv.config().error) {
+if (config.error) {
   throw new Error("Couldn't find .env file");
 }
 
 const envVariables = {
   APP_NAME: process.env.APP_NAME,
 
-  APP_PORT: process.env.APP_PORT
-    ? parseInt(process.env.APP_PORT, 10)
-    : undefined,
+  APP_PORT: process.env.APP_PORT ? parseInt(process.env.APP_PORT, 10) : "3000",
 
   DB_HOST: process.env.DB_HOST,
 

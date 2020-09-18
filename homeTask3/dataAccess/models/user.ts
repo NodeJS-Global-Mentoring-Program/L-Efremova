@@ -5,10 +5,10 @@ import {
   BelongsToManyRemoveAssociationsMixin,
 } from "sequelize";
 
-import { sequelize } from "../data-access/init-sequelize";
+import { sequelize } from "../initSequelize";
 
-import { IUser } from "../utils/interfaces";
-import { bcryptPassword } from "../utils/helpers";
+import { IUser } from "../../utils/interfaces";
+import { bcryptPassword } from "../../utils/helpers";
 
 import { Group, GroupInstance } from "./group";
 

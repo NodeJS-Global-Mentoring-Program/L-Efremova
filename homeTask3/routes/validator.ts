@@ -26,6 +26,6 @@ export const queryUserSchema = Joi.object({
 });
 
 const validator = createValidator({ passError: true });
-validator.body(queryUserSchema);
+const validatorF = validator.body(queryUserSchema);
 
-export default validator.body(queryUserSchema);
+export default validatorF;

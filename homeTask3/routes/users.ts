@@ -1,7 +1,7 @@
 import express from "express";
 
 import UserService from "../services/user";
-import { User } from "../models/user";
+import { User } from "../dataAccess/models/user";
 
 import validator from "./validator";
 

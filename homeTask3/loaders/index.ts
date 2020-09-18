@@ -1,8 +1,8 @@
 // Split the startup process into modules
 import express from "express";
 
-import { initExpressLoader } from "./express-loader";
-import { postgresLoader } from "./postgress-loader";
+import { initExpressLoader } from "./expressLoader";
+import { postgresLoader } from "./postgressLoader";
 
 async function loadApp(expressApp: express.Application): Promise<void> {
   try {

@@ -1,9 +1,9 @@
 import { ModelCtor } from "sequelize";
 
-import { sequelize } from "../data-access/init-sequelize";
+import { sequelize } from "../dataAccess/initSequelize";
 
 import { IGroup } from "../utils/interfaces";
-import { Group, GroupInstance } from "../models/group";
+import { Group, GroupInstance } from "../dataAccess/models/group";
 
 export default class GroupService {
   groupData: typeof Group;

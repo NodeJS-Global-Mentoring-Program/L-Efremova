@@ -1,10 +1,10 @@
 import { ModelCtor } from "sequelize";
 
-import { sequelize } from "../data-access/init-sequelize";
+import { sequelize } from "../dataAccess/initSequelize";
 
 import { IUser } from "../utils/interfaces";
 import { bcryptPassword } from "../utils/helpers";
-import { User } from "../models/user";
+import { User } from "../dataAccess/models/user";
 
 export default class UserService {
   usersData: typeof User;

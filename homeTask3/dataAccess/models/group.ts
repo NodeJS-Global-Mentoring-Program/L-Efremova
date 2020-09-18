@@ -6,9 +6,9 @@ import {
   BelongsToManyRemoveAssociationsMixin,
 } from "sequelize";
 
-import { sequelize } from "../data-access/init-sequelize";
+import { sequelize } from "../initSequelize";
 
-import { IGroup } from "../utils/interfaces";
+import { IGroup } from "../../utils/interfaces";
 
 import { User, UserInstance } from "./user";
 
