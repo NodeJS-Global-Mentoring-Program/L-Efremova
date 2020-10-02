@@ -2,11 +2,14 @@ import express from "express";
 
 import UserService from "../services/user";
 import { User } from "../dataAccess/models/user";
+import { authMiddleware } from "../middleware/auth";
 
 import validator from "./validator";
 
 const usersRouter = express.Router();
 const userService = new UserService(User);
+
+usersRouter.use(authMiddleware);
 
 usersRouter.get("/", async (req, res, next) => {
   const users = await userService.getAll().catch(next);

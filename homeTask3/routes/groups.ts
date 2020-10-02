@@ -2,9 +2,12 @@ import express from "express";
 
 import GroupService from "../services/group";
 import { Group } from "../dataAccess/models/group";
+import { authMiddleware } from "../middleware/auth";
 
 const groupsRouter = express.Router();
 const groupService = new GroupService(Group);
+
+groupsRouter.use(authMiddleware);
 
 groupsRouter.get("/", async (req, res, next) => {
   const groups = await groupService.getAll().catch(next);
@@ -60,7 +63,6 @@ groupsRouter.post("/:groupId/users", async (req, res, next) => {
   await groupService
     .addUsersToGroup(req.params.groupId, [req.body.userId])
     .then((data) => {
-      console.log("data: ", data);
       res.send(`User with id ${req.body.userId} is joined this group!`);
     })
     .catch(next);

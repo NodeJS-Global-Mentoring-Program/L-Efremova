@@ -1,5 +1,3 @@
-import { ModelCtor } from "sequelize";
-
 import { sequelize } from "../dataAccess/initSequelize";
 
 import { IUser } from "../utils/interfaces";
