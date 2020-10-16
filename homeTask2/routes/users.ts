@@ -36,7 +36,6 @@ usersRouter.get("/:id", (req, res) => {
 });
 
 usersRouter.post("/", validator, (req, res) => {
-  console.log("req.body: ", req.body, req.body.login);
   const newUser = createUser(req.body);
 
   users.push(newUser);

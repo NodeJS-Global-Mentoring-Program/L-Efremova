@@ -8,8 +8,7 @@ const authService = new AuthService(User);
 
 authRouter.post("/login", async (req, res, next) => {
   const token = await authService.login(req.body.username, req.body.password);
-  console.log("token: ", token);
-
+  
   if (token) {
     res.status(200).send({ token });
   } else {

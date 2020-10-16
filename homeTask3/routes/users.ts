@@ -1,13 +1,13 @@
 import express from "express";
 
 import UserService from "../services/user";
-import { User } from "../dataAccess/models/user";
+import { User as UserModel } from "../dataAccess/models/user";
 import { authMiddleware } from "../middleware/auth";
 
 import validator from "./validator";
 
 const usersRouter = express.Router();
-const userService = new UserService(User);
+const userService = new UserService(UserModel);
 
 usersRouter.use(authMiddleware);
 

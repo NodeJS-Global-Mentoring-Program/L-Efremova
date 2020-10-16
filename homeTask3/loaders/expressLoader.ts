@@ -12,7 +12,9 @@ export function initExpressLoader(app: express.Application) {
 
   app.use(authRouter);
   app.use((req, res, next) => {
-    logger.info(`Request: ${req.method} ${req.url}`);
+    if (process.env.NODE_ENV === "development") {
+      logger.info(`Request: ${req.method} ${req.url}`);
+    }
     next();
   });
 

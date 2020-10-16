@@ -26,8 +26,6 @@ groupsRouter.get("/:id", async (req, res, next) => {
 });
 
 groupsRouter.post("/", async (req, res, next) => {
-  //TODO: add validation
-  console.log(req.body);
   const newGroup = await groupService
     .createGroup({
       ...req.body,
